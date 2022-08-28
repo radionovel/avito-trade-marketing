@@ -1,24 +1,58 @@
-# Lumen PHP Framework
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+Для запуска миграция необходимо выполнить комманду
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+`docker-compose exec app php -f artisan migrate -n --force`
 
-## Official Documentation
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+Описание API
 
-## Contributing
+GET /api/v1/statistics
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Метод показа статистики
 
-## Security Vulnerabilities
+Параметры запроса
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+    from - дата начала периода (включительно)
+    to - дата окончания периода (включительно)
 
-## License
+Ответ
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    current_page - текущая страница пагинации
+    data - массив с объектами статистики
+
+        date - дата события
+        views - количество просмотров
+        clicks - количество кликов
+        cost - стоимость кликов
+        cpc - средняя стоимость клика
+        cpm - средняя стоимость 1000 показов
+
+    first_page_url - адрес первой страницы пагинации
+    from - 
+    last_page - последняя страница пагинации
+    last_page_url - адрес последней страницы пагинации
+    links - массив со ссылками пагинации
+    
+        url - адрес ссылки,
+        label - номер страницы,
+        active - флаг активности страницы. true если выбрана данная страница
+
+    next_page_url - адрес следующий страницы пагинации
+    per_page - количество записей на стрнице
+    prev_page_url - адрес предыдущей страницы пагинации
+    total - общее количетво элементов
+
+POST /api/v1/statistics
+
+Метод сохранения статистики
+
+Принимает на вход JSON
+
+    date - дата события
+    views - количество показов
+    clicks - количество кликов
+    cost - стоимость кликов (в рублях с точностью до копеек)
+
+DELETE /api/v1/statistics
+
+Метод удаляет всю сохраненную статистику.
