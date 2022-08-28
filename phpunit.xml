@@ -6,9 +6,21 @@
 >
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <coverage cacheDirectory="coverage/cache"
+              processUncoveredFiles="true"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="true">
+        <report>
+            <html outputDirectory="coverage/html-coverage"/>
+        </report>
+        <include>
+            <directory suffix=".php">app</directory>
+        </include>
+    </coverage>
+
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>

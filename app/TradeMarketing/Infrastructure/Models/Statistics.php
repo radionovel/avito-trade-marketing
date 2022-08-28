@@ -1,0 +1,53 @@
+<?php
+declare(strict_types=1);
+
+
+namespace App\TradeMarketing\Infrastructure\Models;
+
+use App\TradeMarketing\Infrastructure\Factories\StatisticsFactory;
+use App\TradeMarketing\Infrastructure\ModelQueryBuilders\StatisticsQueryBuilder;
+use DateTimeImmutable;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property DateTimeImmutable $date
+ * @property int $views
+ * @property int $clicks
+ * @property float $cost
+ *
+ * @method static static create(array $attributes = [])
+ * @method static StatisticsQueryBuilder query()
+ */
+class Statistics extends Model
+{
+    protected $table = 'statistics';
+
+    protected $fillable = [
+        'date', 'views', 'cost', 'clicks'
+    ];
+
+    protected $casts = [
+        'date' => 'immutable_date',
+        'cost' => 'double',
+    ];
+
+    public static function createFromEntity(\App\TradeMarketing\Domain\Entities\Statistics $statistics)
+    {
+        self::create([
+            'date' => $statistics->getDate(),
+            'views' => $statistics->getViews(),
+            'clicks' => $statistics->getClicks(),
+            'cost' => $statistics->getCost()->getAmount(),
+        ]);
+    }
+
+    public function newEloquentBuilder($query): StatisticsQueryBuilder
+    {
+        return new StatisticsQueryBuilder($query);
+    }
+
+    public function toEntity(): \App\TradeMarketing\Domain\Entities\Statistics
+    {
+        return StatisticsFactory::createFromModel($this);
+    }
+}
