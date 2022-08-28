@@ -38,6 +38,13 @@ class MoneyTest extends TestCase
         $this->assertTrue($money->divide(2)->equals($divided));
     }
 
+    public function testMultiplication()
+    {
+        $money = new Money(100.80, Currency::RUB());
+        $divided = new Money(10080.0, Currency::RUB());
+        $this->assertTrue($money->multiplication(100)->equals($divided));
+    }
+
     public function testSafeDivide()
     {
         $money = new Money(100.80, Currency::RUB());

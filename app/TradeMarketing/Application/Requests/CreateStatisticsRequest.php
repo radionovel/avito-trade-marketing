@@ -28,6 +28,9 @@ class CreateStatisticsRequest
         $this->validate($this->request, $this->rules(), $this->messages());
     }
 
+    /**
+     * @return string[]
+     */
     public function rules(): array
     {
         return [
@@ -38,6 +41,9 @@ class CreateStatisticsRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function messages(): array
     {
         return [

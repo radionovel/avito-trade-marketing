@@ -73,7 +73,7 @@ class Statistics extends Entity
 
     public function getCPM(): Money
     {
-        return $this->cost->safeDivide($this->getViews());
+        return $this->cost->safeDivide($this->getViews())->multiplication(1000);
     }
 
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\TradeMarketing\Domain\Entities;
 
+use App\TradeMarketing\Domain\Entities\Statistics;
 use Tests\TestCase;
 use Tests\TradeMarketing\Fixtures\MoneyFixture;
 use Tests\TradeMarketing\Fixtures\StatisticsFixture;
@@ -35,13 +36,13 @@ class StatisticsTest extends TestCase
     }
 
     /**
-     * @param $instance
+     * @param Statistics $instance
      * @param $cpmCost
      * @return void
      *
      * @dataProvider statisticsCPMDataProvider
      */
-    public function testCPM($instance, $cpmCost): void
+    public function testCPM(Statistics $instance, $cpmCost): void
     {
         $cpm = $instance->getCPM();
         $cost = MoneyFixture::createRUB($cpmCost);
@@ -66,7 +67,7 @@ class StatisticsTest extends TestCase
     public function statisticsCPMDataProvider(): array
     {
         return [
-            [StatisticsFixture::create(100, 50, 10), .1],
+            [StatisticsFixture::create(100, 50, 10), 100],
             [StatisticsFixture::create(100, 50, 0), 0],
             [StatisticsFixture::create(0, 0, 10), 0],
         ];

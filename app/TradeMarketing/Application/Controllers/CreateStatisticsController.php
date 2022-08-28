@@ -11,6 +11,11 @@ use Laravel\Lumen\Routing\Controller;
 
 class CreateStatisticsController extends Controller
 {
+    /**
+     * @param CreateStatisticsRequest $request
+     * @param StatisticsRepositoryInterface $repository
+     * @return JsonResponse
+     */
     public function __invoke(CreateStatisticsRequest $request, StatisticsRepositoryInterface $repository): JsonResponse
     {
         $statistics = StatisticsFactory::createFromArray($request->request()->all());

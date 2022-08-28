@@ -28,9 +28,15 @@ class Statistics extends Model
 
     protected $casts = [
         'date' => 'immutable_date',
+        'views' => 'int',
+        'clicks' => 'int',
         'cost' => 'double',
     ];
 
+    /**
+     * @param \App\TradeMarketing\Domain\Entities\Statistics $statistics
+     * @return void
+     */
     public static function createFromEntity(\App\TradeMarketing\Domain\Entities\Statistics $statistics)
     {
         self::create([
@@ -41,11 +47,18 @@ class Statistics extends Model
         ]);
     }
 
+    /**
+     * @param $query
+     * @return StatisticsQueryBuilder
+     */
     public function newEloquentBuilder($query): StatisticsQueryBuilder
     {
         return new StatisticsQueryBuilder($query);
     }
 
+    /**
+     * @return \App\TradeMarketing\Domain\Entities\Statistics
+     */
     public function toEntity(): \App\TradeMarketing\Domain\Entities\Statistics
     {
         return StatisticsFactory::createFromModel($this);

@@ -8,6 +8,10 @@ use Laravel\Lumen\Routing\Controller;
 
 class DeleteStatisticsController extends Controller
 {
+    /**
+     * @param StatisticsRepositoryInterface $repository
+     * @return JsonResponse
+     */
     public function __invoke(StatisticsRepositoryInterface $repository): JsonResponse
     {
         $repository->clear();

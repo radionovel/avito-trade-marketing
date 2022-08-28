@@ -28,7 +28,9 @@ class StatisticsRepository implements StatisticsRepositoryInterface
     public function paginate($filter): LengthAwarePaginator
     {
         return StatisticsModel::query()
+            ->selectRaw('date, sum(views) as views, sum(clicks) as clicks, sum(cost) as cost')
             ->orderBy('date')
+            ->groupBy('date')
             ->filter($filter)
             ->through(function (StatisticsModel $statistics) {
                 return $statistics->toEntity();

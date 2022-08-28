@@ -9,6 +9,9 @@ use JsonSerializable;
 
 class Entity implements JsonSerializable
 {
+    /**
+     * @return array|string
+     */
     public function jsonSerialize()
     {
         if (method_exists($this, 'toArray')) {

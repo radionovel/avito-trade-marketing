@@ -22,6 +22,36 @@ class Money implements JsonSerializable
         $this->currency = $currency;
     }
 
+    /**
+     * @param $multiplier
+     * @return Money
+     */
+    public function multiplication($multiplier): Money
+    {
+        $quotient = round($this->getAmount() * $multiplier, 2);
+        return new Money($quotient, $this->getCurrency());
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @return Currency
+     */
+    public function getCurrency(): Currency
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param float $divider
+     * @return Money
+     */
     public function safeDivide(float $divider): Money
     {
         if ($divider === .0) {
@@ -31,22 +61,20 @@ class Money implements JsonSerializable
         return $this->divide($divider);
     }
 
-    public function getCurrency(): Currency
-    {
-        return $this->currency;
-    }
-
+    /**
+     * @param float $divider
+     * @return Money
+     */
     public function divide(float $divider): Money
     {
         $quotient = round($this->getAmount() / $divider, 2);
         return new Money($quotient, $this->getCurrency());
     }
 
-    public function getAmount(): float
-    {
-        return $this->amount;
-    }
-
+    /**
+     * @param Money $money
+     * @return bool
+     */
     public function equals(Money $money): bool
     {
         if (!$this->getCurrency()->equals($money->currency)) {
@@ -56,11 +84,17 @@ class Money implements JsonSerializable
         return $this->getAmount() === $money->getAmount();
     }
 
+    /**
+     * @return string
+     */
     public function jsonSerialize(): string
     {
         return $this->__toString();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return sprintf('%s %s', $this->getAmount(), $this->currency->getSymbol());
